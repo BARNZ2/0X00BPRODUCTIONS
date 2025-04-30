@@ -246,5 +246,17 @@ body, html {
     z-index: 1;
   }
 }
+@media (max-width: 1199px) and (min-width: 1025px) {
+  #discord-widget {
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    max-width: 700px;
+    z-index: 1;
+  }
+}
+
 
 /*ALL OF THE MEDIA ABOVE IS FOR THE ACTIVITY
