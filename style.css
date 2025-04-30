@@ -1,0 +1,250 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a; /* plain dark background */
+  overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
+  position: relative;
+}
+
+#starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.logo {
+  width: 700px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.typing {
+  color: #ffffff;
+  font-size: 0.9rem;
+  white-space: normal; /* <-- change this */
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
+  min-height: 2rem;
+  max-width: 90vw; /* <- limit width relative to screen */
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Icon container */
+.icon-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 2;
+}
+
+.icon-container a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.icon-container a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.icon-container img.icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+/* Mute/Unmute button styling */
+.icon-container #muteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.icon-container #muteButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.icon-container #muteButton img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+/* Small screen support */
+@media (max-width: 768px) {
+  .icon-container {
+      gap: 10px;
+      top: 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .logo {
+      width: 650px;
+  }
+
+  .typing {
+      font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+      width: 500px;
+  }
+
+  .typing {
+      font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+      width: 350px;
+  }
+
+  .typing {
+      font-size: 0.6rem;
+  }
+}
+/* Disable text selection and copying */
+* {
+  user-select: none; /* This prevents text selection for all elements */
+  -webkit-user-select: none; /* For Safari */
+  -moz-user-select: none; /* For Firefox */
+  -ms-user-select: none; /* For Internet Explorer/Edge */
+  -webkit-user-drag: none;
+}
+
+body, html {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Discord Widget */
+#discord-widget {
+  position: absolute;
+  left: 350px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.8rem;
+  font-family: 'Courier New', Courier, monospace;
+  width: 220px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#discord-widget .profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#discord-widget .profile img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+#discord-widget .activity {
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+#discord-widget strong {
+  color: #fff;
+}
+@media (max-width: 768px) and (min-width: 481px) {
+  #discord-widget {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    max-width: 500px;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  #discord-widget {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    max-width: 400px;
+    z-index: 1;
+  }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  #discord-widget {
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    max-width: 600px;
+    z-index: 1;
+  }
+}
+@media (min-width: 1200px) {
+  #discord-widget {
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    max-width: 800px; /* You can increase this as needed */
+    z-index: 1;
+  }
+}
+
+/*ALL OF THE MEDIA ABOVE IS FOR THE ACTIVITY

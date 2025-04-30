@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>b4rnz@kali</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <!-- Icon container (new) -->
+    <div class="icon-container">
+        <a href="https://www.facebook.com/BARNZ.ZZZ" target="_blank" title="Facebook">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/facebook.svg" alt="Facebook" class="icon">
+        </a>
+        <a href="https://www.instagram.com/ernz.zzz/" target="_blank" title="Instagram">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/instagram.svg" alt="Instagram" class="icon">
+        </a>
+        <a href="https://discord.gg/3hHSnSTsme" target="_blank" title="Discord">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/discord.svg" alt="Discord" class="icon">
+        </a>
+        <a href="https://github.com/BARNZ2" target="_blank" title="Github">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" alt="Github" class="icon">
+        </a>
+        <a href="https://t.me/B4rnzzzz" target="_blank" title="Telegram">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/telegram.svg" alt="Telegram" class="icon">
+        </a>
+        <a href="https://www.reddit.com/user/BARNXZ/" target="_blank" title="Reddit">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/reddit.svg" alt="Reddit" class="icon">
+        </a>
+        <a href="https://www.youtube.com/shorts/D3viusQ0JVw" title="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
+                <path d="M4 6h16M4 12h16M4 18h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </a>
+
+        <!-- Mute/Unmute button aligned with the icons -->
+        <div class="icon" id="muteButton" style="cursor: pointer;">
+            <!-- Unmute (Speaker) SVG (default icon) -->
+            <svg id="speakerIcon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 22 23">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+            </svg>
+            <!-- Muted (Speaker Off) SVG (hidden initially) -->
+            <svg id="mutedIcon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 22 23" style="display: none;">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3."/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="content">
+        <img src="1.png" alt="Logo" class="logo" id="logo">
+        <div class="typing" id="typing"></div>
+    </div>
+
+    <audio id="backgroundMusic" src="1.mp3" loop></audio>
+
+    <div id="enterMessage" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a0a; color: white; display: flex; align-items: center; justify-content: center; font-family: 'Courier New', Courier, monospace; font-size: 1.5rem; z-index: 9999; cursor: pointer; opacity: 1; transition: opacity 1s ease;">
+        Click anywhere to enter 0X0B PRODUCTIONS.
+    </div>
+    <!-- Discord Activity (Lanyard) -->
+    <div id="discord-widget">
+        <div class="profile">
+            <img id="avatar" src="" alt="Discord Avatar">
+            <div>
+                <div id="username">Loading...</div>
+                <div id="status">Status: Offline</div>
+            </div>
+        </div>
+        <div class="activity" id="spotify-activity" style="display: none;">
+            <strong>Spotify:</strong>
+            <div id="spotify-details"></div>
+        </div>
+        <div class="activity" id="other-activity" style="display: none;">
+            <strong>Activity:</strong>
+            <div id="game-details"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Wait for click anywhere
+        document.getElementById('enterMessage').addEventListener('click', function() {
+            const music = document.getElementById('backgroundMusic');
+            music.play();
+            music.volume = 0.15; // 30% volume
+            this.style.opacity = '0';
+            setTimeout(() => {
+                this.style.display = 'none';
+            }, 1000);
+        });
+
+        // Mute/Unmute functionality
+        const muteButton = document.getElementById('muteButton');
+        const speakerIcon = document.getElementById('speakerIcon');
+        const mutedIcon = document.getElementById('mutedIcon');
+        const music = document.getElementById('backgroundMusic');
+
+        muteButton.addEventListener('click', () => {
+            if (music.muted) {
+                music.muted = false;
+                speakerIcon.style.display = 'block';
+                mutedIcon.style.display = 'none';
+            } else {
+                music.muted = true;
+                speakerIcon.style.display = 'none';
+                mutedIcon.style.display = 'block';
+            }
+        });
+
+        // Discord widget script
+        const userId = '1205835906490306620';
+
+        async function fetchLanyard() {
+            try {
+                const res = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+                const data = await res.json();
+                if (!data.success) return;
+
+                const d = data.data;
+                const avatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png`;
+                document.getElementById("avatar").src = avatar;
+                document.getElementById("username").textContent = d.discord_user.username + "#" + d.discord_user.discriminator;
+                document.getElementById("status").textContent = "Status: " + d.discord_status;
+
+                // Spotify
+                if (d.listening_to_spotify) {
+                    document.getElementById("spotify-activity").style.display = "block";
+                    const s = d.spotify;
+                    document.getElementById("spotify-details").textContent = `${s.song} by ${s.artist}`;
+                } else {
+                    document.getElementById("spotify-activity").style.display = "none";
+                }
+
+                // Other activity
+                const activities = d.activities.filter(a => a.type !== 4 && a.name !== "Spotify");
+                if (activities.length > 0) {
+                    document.getElementById("other-activity").style.display = "block";
+                    document.getElementById("game-details").textContent = activities.map(a => a.name).join(", ");
+                } else {
+                    document.getElementById("other-activity").style.display = "none";
+                }
+            } catch (e) {
+                console.error("Failed to fetch Discord data:", e);
+            }
+        }
+
+        fetchLanyard();
+        setInterval(fetchLanyard, 10000);
+    </script>
+</body>
+</html>
